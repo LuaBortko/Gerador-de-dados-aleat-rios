@@ -46,10 +46,10 @@ fake.add_provider(semestres)
 #alun = {"ra": None, "nome": None, "id_curso": None}
 #discip = {"id": None, "nome": None, "id_depart": None, "id_curso": None, "ra_coordenador": None}
 #turm = {"id": None, "id_diciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
+#matri_cur = {"id_curso": None, "id_diciplina": None}
+#hist = {"ra_aluno": None, "id_diciplina": None, "id_turma": None, "nota": None}
 tc_c = {"id": None, "nome": None, "ra_professor": None}
 tcc_alun = {"id_tcc": None, "ra_aluno": None}
-matri_cu = {"id_curso": None, "id_diciplina": None}
-hist = {"ra_aluno": None, "id_diciplina": None, "id_turma": None, "nota": None}
 
 def gerarDepartamento(n):
     deptos = []
@@ -208,6 +208,21 @@ def gerarTurma(n):
         turmas.append(turm)
     return turmas
 
+def gerarMatrizCurricular(n):
+    matrizes_curriculares = []
+    for i in range(n):
+        matri_cur = {"id_curso": None, "id_diciplina": None}
+        matrizes_curriculares.append(matri_cur)
+    return matrizes_curriculares
+
+def gerarHistorico(n):
+    historicos = []
+    for i in range(n):
+        nota = randint(0,10)
+        hist = {"ra_aluno": None, "id_diciplina": None, "id_turma": None, "nota": nota}
+        historicos.append(hist)
+    return historicos
+
 
     
 
@@ -223,4 +238,6 @@ alun = gerarAlunos(10)
 discip = gerarDisciplina(6)
 #print(discip)
 turm = gerarTurma(8)
-print(turm)
+#print(turm)
+hist = gerarHistorico(10)
+#print(hist)
