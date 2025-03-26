@@ -34,6 +34,30 @@ semestres = DynamicProvider(
     provider_name = "semestre_provider", elements = ["1º","2º"]
 )
 
+tccs = DynamicProvider(
+    provider_name = "tcc_provider", elements = ["Análise e Otimização de Processos Industriais com Inteligência Artificial",
+        "Desenvolvimento de Materiais Sustentáveis para Construção Civil",
+        "Aplicação da Internet das Coisas (IoT) em Sistemas de Automação Residencial",
+        "Modelagem Computacional de Estruturas para Prevenção de Colapsos",
+        "Estudo de Energias Renováveis: Viabilidade de Painéis Solares em Ambientes Urbanos",
+        "Impacto da Impressão 3D na Engenharia de Produção",
+        "Desenvolvimento de um Veículo Elétrico de Baixo Custo para Mobilidade Urbana",
+        "Aplicação da Engenharia de Materiais na Indústria Aeroespacial",
+        "Sistemas de Gestão de Manutenção Preditiva com Aprendizado de Máquina",
+        "Desenvolvimento de um Sistema Inteligente para Monitoramento de Barragens",
+        "Desenvolvimento de um Algoritmo de Machine Learning para Diagnóstico Médico",
+        "Análise de Segurança Cibernética em Aplicações Web",
+        "Desenvolvimento de um Assistente Virtual Baseado em Processamento de Linguagem Natural",
+        "Blockchain: Aplicações Além das Criptomoedas",
+        "Criação de um Sistema de Recomendação Usando Redes Neurais",
+        "Automação de Testes de Software com Inteligência Artificial",
+        "Desenvolvimento de um Jogo Educacional para Ensino de Programação",
+        "Uso de Visão Computacional para Identificação de Placas de Trânsito",
+        "Desenvolvimento de um Chatbot para Atendimento ao Cliente",
+        "Computação Quântica: Algoritmos e Perspectivas Futuras"]
+)
+
+fake.add_provider(tccs)
 fake.add_provider(departamentos)
 fake.add_provider(cursos)
 fake.add_provider(disciplinas)
@@ -48,8 +72,8 @@ fake.add_provider(semestres)
 #turm = {"id": None, "id_diciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
 #matri_cur = {"id_curso": None, "id_diciplina": None}
 #hist = {"ra_aluno": None, "id_diciplina": None, "id_turma": None, "nota": None}
-tc_c = {"id": None, "nome": None, "ra_professor": None}
-tcc_alun = {"id_tcc": None, "ra_aluno": None}
+#tc_c = {"id": None, "nome": None, "ra_professor": None}
+#tcc_alun = {"id_tcc": None, "ra_aluno": None}
 
 def gerarDepartamento(n):
     deptos = []
@@ -223,8 +247,40 @@ def gerarHistorico(n):
         historicos.append(hist)
     return historicos
 
+def gerarTCC(n):
+    tccs = []
+    ids = []
+    nomes = []
+    for i in range(n):
+        aux = 1
+        aux1 = 1
+        id = fake.numerify(text='TCC-%%%%')
+        while aux == 1:
+            if id in ids:
+                id = fake.numerify(text='TCC-%%%%')
+            else:
+                aux = 0
+        
+        nome = fake.tcc_provider()
+        while aux1 == 1:
+            if nome in nomes:
+                nome = fake.tcc_provider()
+            else:
+                aux1 = 0
+        tc_c = {"id": id, "nome": nome, "ra_professor": None}
+        nomes.append(nome)
+        ids.append(id)
+        tccs.append(tc_c)
+    return tccs
 
-    
+def gerarTCC_aluno(n):
+    tccs_a = []
+    for i in range(n):
+        tcc_alun = {"id_tcc": None, "ra_aluno": None}
+        tccs_a.append(tcc_alun)
+    return tccs_a
+
+
 
 
 dep = gerarDepartamento(4)
@@ -241,3 +297,5 @@ turm = gerarTurma(8)
 #print(turm)
 hist = gerarHistorico(10)
 #print(hist)
+tcc = gerarTCC(20)
+print(tcc)
