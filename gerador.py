@@ -1,5 +1,6 @@
 from faker import Faker
 from faker.providers import DynamicProvider
+from random import randint
 
 fake = Faker('pt_BR')
 departamentos = DynamicProvider(
@@ -25,16 +26,26 @@ disciplinas = DynamicProvider(
         "Desenvolvimento Web", "Computação Móvel", "Big Data", "Sistemas Distribuídos"]
 )
 
+periodos = DynamicProvider(
+    provider_name = "periodo_provider", elements = ["diurno" ,"vespertino", "noturno"]
+)
+
+semestres = DynamicProvider(
+    provider_name = "semestre_provider", elements = ["1º","2º"]
+)
+
 fake.add_provider(departamentos)
 fake.add_provider(cursos)
 fake.add_provider(disciplinas)
+fake.add_provider(periodos)
+fake.add_provider(semestres)
 
 #depart = {"id": None, "nome": None, "ra_coodernador": None}
 #prof = {"ra": None, "nome": None, "id_depart": None}
 #curs = {"id": None, "nome": None, "ra_coordenador": None}
 #alun = {"ra": None, "nome": None, "id_curso": None}
 #discip = {"id": None, "nome": None, "id_depart": None, "id_curso": None, "ra_coordenador": None}
-turm = {"id": None, "id_diciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
+#turm = {"id": None, "id_diciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
 tc_c = {"id": None, "nome": None, "ra_professor": None}
 tcc_alun = {"id_tcc": None, "ra_aluno": None}
 matri_cu = {"id_curso": None, "id_diciplina": None}
@@ -174,6 +185,30 @@ def gerarDisciplina(n):
 
 def gerarTurma(n):
     turmas = []
+    ids = []
+    for i in range(n):
+        aux = 1
+        periodo = fake.periodo_provider()
+        if periodo == "noturno":
+            p = "NO"
+        elif periodo == "vespertino":
+            p = "VE"
+        else:
+            p = "DI"
+        id = fake.numerify(text= p + '-%%%')
+        while aux == 1:
+            if id in ids:
+                id = fake.numerify(text= p + '-%%%')
+            else:
+                aux = 0
+        ano = randint(2015,2025)
+        semestre = fake.semestre_provider()
+        ids.append(id)
+        turm = {"id": id, "id_diciplina": None, "semestre": semestre, "ano": ano, "periodo": periodo, "ra_professor": None}
+        turmas.append(turm)
+    return turmas
+
+
     
 
 
@@ -186,5 +221,6 @@ curs = gerarCurso(5)
 alun = gerarAlunos(10)
 #print(alun)
 discip = gerarDisciplina(6)
-print(discip)
-
+#print(discip)
+turm = gerarTurma(8)
+print(turm)
