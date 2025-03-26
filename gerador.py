@@ -309,7 +309,22 @@ for i in range(len(professores)):
     if professores[i]["id_depart"] == None:
         r = randint(0,len(depart)-1)
         professores[i]["id_depart"] = depart[r]["id"]
-
+#Criação de cursos
+cursos = gerarCurso(randint(2,10))
+#Relaçao curso e professor
+for i in range(len(cursos)):
+    aux = 1
+    r = randint(0,len(professores)-1)
+    coord_cu = professores[r]["ra"]
+    while aux == 1:
+        if coord_cu in l_aux:
+            r = randint(0,len(professores)-1)
+            coord_cu = professores[r]["ra"]
+        else:
+            aux = 0
+    cursos[i]["ra_coordenador"] = coord_cu
+    l_aux.append(coord_cu)
+#
 print("Departamentos:\n")
 print(depart)
 print("\nProfessores:\n")
