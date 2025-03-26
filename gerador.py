@@ -64,8 +64,8 @@ fake.add_provider(disciplinas)
 fake.add_provider(periodos)
 fake.add_provider(semestres)
 
-#depart = {"id": None, "nome": None, "ra_coodernador": None}
-#prof = {"ra": None, "nome": None, "id_depart": None}
+##depart = {"id": None, "nome": None, "ra_coodernador": None}
+##prof = {"ra": None, "nome": None, "id_depart": None}
 #curs = {"id": None, "nome": None, "ra_coordenador": None}
 #alun = {"ra": None, "nome": None, "id_curso": None}
 #discip = {"id": None, "nome": None, "id_depart": None, "id_curso": None, "ra_coordenador": None}
@@ -280,7 +280,7 @@ def gerarTCC_aluno(n):
         tccs_a.append(tcc_alun)
     return tccs_a
 
-
+#Main
 n = int(input("Digite o numero de dados 1-8: "))
 #gera o numero de departamentos e professores
 l_aux = []
@@ -292,13 +292,28 @@ professores = gerarProfessor(n^2 + 4*n)
 #relação departamento - professor
 for i in range(len(depart)):
     aux = 1
-    r = randint(0,len(professores))
+    r = randint(0,len(professores)-1)
     coord_dep = professores[r]["ra"]
     while aux == 1:
         if coord_dep in l_aux:
-            r = randint(0,len(professores))
+            r = randint(0,len(professores)-1)
             coord_dep = professores[r]["ra"]
         else:
             aux = 0
     depart[i]["ra_coodernador"] = coord_dep
-    l_aux.append(coord_dep)
+    professores[r]["id_depart"] = depart[i]["id"]
+    l_aux.append(coord_dep) # no momento guarda ra dos professores coordenadores de depart 
+l_aux.clear()
+#relação professor - departamento
+for i in range(len(professores)):
+    if professores[i]["id_depart"] == None:
+        r = randint(0,len(depart)-1)
+        professores[i]["id_depart"] = depart[r]["id"]
+
+print("Departamentos:\n")
+print(depart)
+print("\nProfessores:\n")
+print(professores)
+print("\nCursos:\n")
+print(cursos)
+
