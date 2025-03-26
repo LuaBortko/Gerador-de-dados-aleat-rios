@@ -6,11 +6,11 @@ fake = Faker('pt_BR')
 departamentos = DynamicProvider(
     provider_name = "departamento_provider", elements = ["matematica", "computaçao", "civil", "eletrica", "fisica", "producao", "ciencias sociais", "quimica"]
 )
-
+#8
 cursos = DynamicProvider(
     provider_name = "curso_provider", elements = ["Eng. Eletrica","Eng. Mecanica", "Eng. Quimica", "Administração", "Eng. Automação", "Eng. de Materiais", "Eng. Robos", "Ciencia da Computação", "Ciencia de Dados", "Eng. de Produção"]
 )
-
+#10
 disciplinas = DynamicProvider(
     provider_name = "disciplina_provider", elements = ["Cálculo I", "Cálculo II", "Cálculo III", "Álgebra Linear", "Geometria Analítica",
         "Física I", "Física II", "Física III", "Química Geral", "Mecânica dos Sólidos",
@@ -281,21 +281,24 @@ def gerarTCC_aluno(n):
     return tccs_a
 
 
-
-
-dep = gerarDepartamento(4)
-#print(dep)
-prof = gerarProfessor(6)
-#print(prof)
-curs = gerarCurso(5)
-#print(curs)
-alun = gerarAlunos(10)
-#print(alun)
-discip = gerarDisciplina(6)
-#print(discip)
-turm = gerarTurma(8)
-#print(turm)
-hist = gerarHistorico(10)
-#print(hist)
-tcc = gerarTCC(20)
-print(tcc)
+n = int(input("Digite o numero de dados 1-8: "))
+#gera o numero de departamentos e professores
+l_aux = []
+if n > 8:
+    depart = gerarDepartamento(8)
+else:
+    depart = gerarDepartamento(n)
+professores = gerarProfessor(n^2 + 4*n)
+#relação departamento - professor
+for i in range(len(depart)):
+    aux = 1
+    r = randint(0,len(professores))
+    coord_dep = professores[r]["ra"]
+    while aux == 1:
+        if coord_dep in l_aux:
+            r = randint(0,len(professores))
+            coord_dep = professores[r]["ra"]
+        else:
+            aux = 0
+    depart[i]["ra_coodernador"] = coord_dep
+    l_aux.append(coord_dep)
