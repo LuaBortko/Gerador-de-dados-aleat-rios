@@ -144,9 +144,7 @@ def gerarCurso(n):
                 aux1 = 0
         if "Eng" in nome:
             p = "ENG"
-        elif nome == "Ciencia da Computação":
-            p = "C"
-        elif nome == "Ciencia de Dados":
+        elif "Ciencia" in nome:
             p = "C"
         else:
             p = "ADM"
@@ -318,7 +316,7 @@ for i in range(len(professores)):
         r = randint(0,len(depart)-1)
         professores[i]["id_depart"] = depart[r]["id"]
 #Criação de cursos
-cursos = gerarCurso(randint(2,10))
+cursos = gerarCurso(randint(4,10))
 #Relaçao curso e professor
 for i in range(len(cursos)):
     aux = 1
