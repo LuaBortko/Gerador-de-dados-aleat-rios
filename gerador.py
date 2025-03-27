@@ -66,8 +66,8 @@ fake.add_provider(semestres)
 
 ##depart = {"id": None, "nome": None, "ra_coodernador": None}
 ##prof = {"ra": None, "nome": None, "id_depart": None}
-#curs = {"id": None, "nome": None, "ra_coordenador": None}
-#alun = {"ra": None, "nome": None, "id_curso": None}
+##curs = {"id": None, "nome": None, "ra_coordenador": None}
+##alun = {"ra": None, "nome": None, "id_curso": None}
 #discip = {"id": None, "nome": None, "id_depart": None, "id_curso": None, "ra_coordenador": None}
 #turm = {"id": None, "id_diciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
 #matri_cur = {"id_curso": None, "id_diciplina": None}
@@ -195,12 +195,12 @@ def gerarDisciplina(n):
     for i in range(n):
         aux = 1
         aux1 =  1
-        id = fake.numerify(text='DI-%%%')
-        while aux == 1:
-            if id in ids:
-                id = fake.numerify(text='DI-%%%')
-            else:
-                aux = 0
+        #id = fake.numerify(text='DI-%%%')
+        #while aux == 1:
+        #    if id in ids:
+        #        id = fake.numerify(text='DI-%%%')
+        #    else:
+        #        aux = 0
         nome = fake.disciplina_provider()
         while aux1 == 1:
             if nome in nomes:
@@ -208,8 +208,8 @@ def gerarDisciplina(n):
             else:
                 aux1 = 0
         nomes.append(nome)
-        ids.append(id)
-        discip = {"id": id, "nome": nome, "id_depart": None, "id_curso": None, "ra_coordenador": None}
+        #ids.append(id)
+        discip = {"id": None, "nome": nome, "id_depart": None, "id_curso": None, "ra_coordenador": None}
         discips.append(discip)
     return discips
 
@@ -340,7 +340,16 @@ for i in range(len(alunos)):
     else:
         r = randint(0,len(cursos)-1)
         alunos[i]["id_curso"] = cursos[r]["id"]
-#
+#Criar as diciplinas
+disciplinas = gerarDisciplina(len(cursos) + 2*len(cursos))
+#Relações das disciplinas  
+for i in range(len(disciplinas)):
+    if i < len(depart):
+        disciplinas[i]["id_depart"] = depart[i]["id"]
+    else:
+        r = randint(0,len(depart)-1)
+        disciplinas[i]["id_depart"] = depart[r]["id"]
+        
 
 print("Departamentos:\n")
 print(depart)
