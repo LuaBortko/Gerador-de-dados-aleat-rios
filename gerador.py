@@ -145,9 +145,9 @@ def gerarCurso(n):
         if "Eng" in nome:
             p = "ENG"
         elif nome == "Ciencia da Computação":
-            p = "CC"
+            p = "C"
         elif nome == "Ciencia de Dados":
-            p = "CD"
+            p = "C"
         else:
             p = "ADM"
         id = fake.numerify(text= p +'-%%%')
