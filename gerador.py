@@ -136,18 +136,26 @@ def gerarCurso(n):
     for i in range(n):
         aux = 1
         aux1 =  1
-        id = fake.numerify(text='CU-%%%')
-        while aux == 1:
-            if id in ids:
-                id = fake.numerify(text='CU-%%%')
-            else:
-                aux = 0
         nome = fake.curso_provider()
         while aux1 == 1:
             if nome in nomes:
                 nome = fake.curso_provider()
             else:
                 aux1 = 0
+        if "Eng" in nome:
+            p = "ENG"
+        elif nome == "Ciencia da Computação":
+            p = "CC"
+        elif nome == "Ciencia de Dados":
+            p = "CD"
+        else:
+            p = "ADM"
+        id = fake.numerify(text= p +'-%%%')
+        while aux == 1:
+            if id in ids:
+                id = fake.numerify(text= p +'-%%%')
+            else:
+                aux = 0
         nomes.append(nome)
         ids.append(id)
         curs = {"id": id, "nome": nome, "ra_coordenador": None}
@@ -324,11 +332,25 @@ for i in range(len(cursos)):
             aux = 0
     cursos[i]["ra_coordenador"] = coord_cu
     l_aux.append(coord_cu)
+l_aux.clear()
+#criação do aluno
+alunos = gerarAlunos(n^3 + 8*n)
+#Relação aluno e curso
+for i in range(len(alunos)):
+    if i < len(cursos):
+        alunos[i]["id_curso"] = cursos[i]["id"]
+    else:
+        r = randint(0,len(cursos)-1)
+        alunos[i]["id_curso"] = cursos[r]["id"]
 #
+
 print("Departamentos:\n")
 print(depart)
 print("\nProfessores:\n")
 print(professores)
 print("\nCursos:\n")
 print(cursos)
-
+print("\n")
+print("Alunos:")
+print("\n")
+print(alunos)
