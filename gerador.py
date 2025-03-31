@@ -148,7 +148,7 @@ def gerarCurso(n):
             p = "C"
         else:
             p = "ADM"
-        id = fake.numerify(text= p +'-%%%')
+        id = fake.numerify(text= p +'-%')
         while aux == 1:
             if id in ids:
                 id = fake.numerify(text= p +'-%%%')
@@ -341,15 +341,27 @@ for i in range(len(alunos)):
         r = randint(0,len(cursos)-1)
         alunos[i]["id_curso"] = cursos[r]["id"]
 #Criar as diciplinas
-disciplinas = gerarDisciplina(len(cursos) + 2*len(cursos))
-#Relações das disciplinas  
+disciplinas = gerarDisciplina(3*len(cursos))
+#Relações das disciplinas - curso
 for i in range(len(disciplinas)):
+    #relação com o departamento
     if i < len(depart):
         disciplinas[i]["id_depart"] = depart[i]["id"]
     else:
         r = randint(0,len(depart)-1)
         disciplinas[i]["id_depart"] = depart[r]["id"]
-        
+    #relação com o professor
+    for j in range(len(professores)):
+        if professores[j]["id_depart"] == disciplinas[i]["id_depart"]:
+            l_aux.append(professores[j]["ra"])
+    r2 =  randint(0,len(l_aux)-1)
+    disciplinas[i]["ra_coordenador"] = l_aux[r2]
+    l_aux.clear()
+#Criação da turma
+turmas = gerarTurma(4*len(cursos))
+#relações de turma
+for i in range(len(turmas)):
+    pass        
 
 print("Departamentos:\n")
 print(depart)
@@ -361,3 +373,5 @@ print("\n")
 print("Alunos:")
 print("\n")
 print(alunos)
+print("\nDisciplinas:\n")
+print(disciplinas)
