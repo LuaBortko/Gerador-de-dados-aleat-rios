@@ -359,17 +359,24 @@ for i in range(len(disciplinas)):
     l_aux.clear()
 #Criação matriz
 matrizes = gerarMatrizCurricular(len(disciplinas)^2)
+# for i in range(len(matrizes)):
+    #if i < len(cursos):
+    #    matrizes[i]["id_curso"] = cursos[i]["id"]
+    #else:
+    #    r = randint(0,len(cursos)-1)
+    #    matrizes[i]["id_curso"] = cursos[r]["id"]
+    #if i < len(disciplinas):
+    #    matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
+    #else:
+    #     r = randint(0,len(cursos)-1)
+    #     matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
 for i in range(len(matrizes)):
-    if i < len(cursos):
-        matrizes[i]["id_curso"] = cursos[i]["id"]
-    else:
-        r = randint(0,len(cursos)-1)
-        matrizes[i]["id_curso"] = cursos[r]["id"]
-    if i < len(disciplinas):
-        matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
-    else:
-         r = randint(0,len(cursos)-1)
-         matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
+    r = randint(0, len(cursos) - 1)
+    matrizes[i]["id_curso"] = cursos[r]["id"]
+
+    for i in range(randint(5, 10)):
+        r = randint(0, len(disciplinas) - 1)
+        matrizes[i]["id_disciplina"] = disciplinas[r]["id"]
 
 #Criação da turma
 turmas = gerarTurma(n^2 + 6*n)
@@ -389,7 +396,7 @@ for i in range(len(turmas)):
         turmas[i]["ra_professor"] = professores[r]["ra"]
 
 
-print("Departamentos:\n")
+"""print("Departamentos:\n")
 print(depart)
 print("\nProfessores:\n")
 print(professores)
@@ -402,4 +409,10 @@ print(alunos)
 print("\nDisciplinas:\n")
 print(disciplinas)
 print("\nTurma\n")
-print(turmas)
+print(turmas)"""
+for j in range(len(cursos)):
+    print("Curso: ",cursos[j]["id"])
+    for i in range(len(matrizes)):
+        if matrizes[i]["id_curso"] == cursos[j]["id"]:
+            print(matrizes[i])
+
