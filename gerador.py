@@ -69,7 +69,7 @@ fake.add_provider(semestres)
 ##curs = {"id": None, "nome": None, "ra_coordenador": None}
 ##alun = {"ra": None, "nome": None, "id_curso": None}
 #discip = {"id": None, "nome": None, "id_depart": None, "id_curso": None, "ra_coordenador": None}
-#turm = {"id": None, "id_disciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
+##turm = {"id": None, "id_disciplina": None, "semestre": None, "ano": None, "periodo": None, "ra_professor": None}
 #matri_cur = {"id_curso": None, "id_disciplina": None}
 #hist = {"ra_aluno": None, "id_disciplina": None, "id_turma": None, "nota": None}
 #tc_c = {"id": None, "nome": None, "ra_professor": None}
@@ -151,7 +151,7 @@ def gerarCurso(n):
         id = fake.numerify(text= p +'-%')
         while aux == 1:
             if id in ids:
-                id = fake.numerify(text= p +'-%%%')
+                id = fake.numerify(text= p +'-%')
             else:
                 aux = 0
         nomes.append(nome)
@@ -357,8 +357,22 @@ for i in range(len(disciplinas)):
     r2 =  randint(0,len(l_aux)-1)
     disciplinas[i]["ra_coordenador"] = l_aux[r2]
     l_aux.clear()
+#Criação matriz
+matrizes = gerarMatrizCurricular(len(disciplinas)^2)
+for i in range(len(matrizes)):
+    if i < len(cursos):
+        matrizes[i]["id_curso"] = cursos[i]["id"]
+    else:
+        r = randint(0,len(cursos)-1)
+        matrizes[i]["id_curso"] = cursos[r]["id"]
+    if i < len(disciplinas):
+        matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
+    else:
+         r = randint(0,len(cursos)-1)
+         matrizes[i]["id_disciplina"] = disciplinas[i]["id"]
+
 #Criação da turma
-turmas = gerarTurma(4*len(cursos))
+turmas = gerarTurma(n^2 + 6*n)
 #relações de turma
 for i in range(len(turmas)):
     #relação turma e disciplina
@@ -367,7 +381,13 @@ for i in range(len(turmas)):
     else:
         r = randint(0,len(disciplinas)-1)
         turmas[i]["id_disciplina"] = disciplinas[r]["id"]
-    #relação turma e coordenador
+    #relação turma e professor
+    if i < len(professores):
+        turmas[i]["ra_professor"] = professores[i]["ra"]
+    else:
+        r = randint(0,len(professores)-1)
+        turmas[i]["ra_professor"] = professores[r]["ra"]
+
 
 print("Departamentos:\n")
 print(depart)
@@ -381,3 +401,5 @@ print("\n")
 print(alunos)
 print("\nDisciplinas:\n")
 print(disciplinas)
+print("\nTurma\n")
+print(turmas)
