@@ -1,0 +1,14 @@
+continuar mudando o nome das tabelas para que no momento que for colocar as informações de todos os dicionários, seja possível colocar todas as informações necessárias. 
+O que pode ser feito:
+trocar a referencia do dicionário para poder utilizar cada dicionário
+(provavelmente vai ter um for por causa das listas de dicionários que estão sendo usados)
+então algo que possa possivelmente ser feito é:
+-iterar a cada de lista de tabelas(EM ORDEM CORRETA, por causa de todas as dependências das tabelas)
+-com essa lista, utilizar um certo nome para a variável tabela(provavelmente mudar durante a iteração da lista, por exemplo, seriam feita a tabela inteira de alunos de uma vez só, então, enquanto seria iterado pela lista de alunos, a variável tabela seria igual a "alunos" e assim por diante. 
+-Enquanto estiver iterando sobre esta lista, seria utilizada a função de conectar com o banco de dados(obvio) e usar a construção de query de INSERT INTO previamente feito para assim colocar toda as informações necessárias.
+Para poder mudar a variável de tabela:
+-Para fazer isso, aí eu não sei por exato, pois isso iria requerir uma caralhada de for, então a gnt poderia possivelmente fazer uma função com parâmetros da lista e do nome da tabela na qual será inserida, usando todo o código que foi feito até agora antes da conexão ser fechada. 
+-Pode ter uma caralhada de for também, mas assssiiiiimmmm, não é a melhor coisa a se fazer, acho, porque também ia ter uma repetição de código absurda.
+-Porém, aí vem outro problema, que é como fazer a função sem ter que fazer um monte de conexão dentro do código, tipo, chamar a função de conexão 
+- fazer a função dentro da parte de conexão, já que ela precisa dela para poder funcionar né kkkkkkk
+-Agora eu bugei, eu tenho como parâmetros o dicionário e a tabela, só que eu acho que aí vai ter que ser um monte de for de qualquer jeito, pois não tem uma certeza de que a lista dada no parâmetro seria necessariamente uma lista de dicionários, a não ser que seja feita outra função que seja apenas um for de chamar a função de inserção no banco. 
