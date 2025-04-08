@@ -23,7 +23,22 @@ disciplinas = DynamicProvider(
         "Inteligência Artificial", "Aprendizado de Máquina", "Visão Computacional",
         "Criptografia e Segurança", "Computação Gráfica", "Arquitetura de Computadores",
         "Teoria da Computação", "Matemática Discreta", "Computação em Nuvem",
-        "Desenvolvimento Web", "Computação Móvel", "Big Data", "Sistemas Distribuídos"]
+        "Desenvolvimento Web", "Computação Móvel", "Big Data", "Sistemas Distribuídos",
+        "Métodos Numéricos", "Equações Diferenciais Ordinárias", "Equações Diferenciais Parciais",
+    "Cálculo Numérico", "Física Moderna", "Física Quântica para Engenharia",
+    "Estatística e Probabilidade", "Análise Real", "Análise Complexa",
+    "Instrumentação e Medidas", "Dinâmica de Sistemas Mecânicos", "Elementos de Máquinas",
+    "Transferência de Calor", "Sistemas Térmicos", "Projeto Mecânico",
+    "Máquinas Hidráulicas", "Eficiência Energética", "Engenharia Econômica",
+    "Engenharia de Produção", "Engenharia de Controle", "Robótica Industrial",
+    "Manutenção Industrial", "Engenharia de Requisitos", "Testes de Software",
+    "Desenvolvimento de Aplicativos", "Interface Humano-Computador (IHC)",
+    "Sistemas Embarcados", "Computação Quântica", "Computação Paralela", "Engenharia de Dados",
+    "DevOps", "Análise de Dados", "Deep Learning", "Processamento de Linguagem Natural (PLN)",
+    "Blockchain e Aplicações", "Internet das Coisas (IoT)", "Segurança Cibernética",
+    "Empreendedorismo e Inovação", "Ética Profissional e Engenharia", "Comunicação Científica",
+    "Design Thinking", "Sustentabilidade e Meio Ambiente", "Liderança e Trabalho em Equipe",
+    "Propriedade Intelectual", "Metodologia Científica", "Projetos Interdisciplinares"]
 )
 
 periodos = DynamicProvider(
@@ -272,12 +287,9 @@ def gerarTCC(n):
         tccs.append(tc_c)
     return tccs
 
-def gerarTCC_aluno(n):
-    tccs_a = []
-    for i in range(n):
-        tcc_alun = {"id_tcc": None, "ra_aluno": None}
-        tccs_a.append(tcc_alun)
-    return tccs_a
+def gerarTCC_aluno(tcc,aluno):
+    tcc_alun = {"id_tcc": tcc, "ra_aluno": aluno}
+    return tcc_alun
 
 #Main
 n = int(input("Digite o numero de dados 1-8: "))
@@ -287,7 +299,7 @@ if n > 8:
     depart = gerarDepartamento(8)
 else:
     depart = gerarDepartamento(n)
-professores = gerarProfessor(n^2 + 4*n)
+professores = gerarProfessor(n^2 + 2*n)
 #relação departamento - professor
 for i in range(len(depart)):
     aux = 1
@@ -325,7 +337,7 @@ for i in range(len(cursos)):
     l_aux.append(coord_cu)
 l_aux.clear()
 #criação do aluno
-alunos = gerarAlunos(n^2 + 8*n)
+alunos = gerarAlunos(n^2 + 4*n)
 #Relação aluno e curso
 for i in range(len(alunos)):
     if i < len(cursos):
@@ -386,8 +398,10 @@ for i in range(len(turmas)):
         r = randint(0,len(professores)-1)
         turmas[i]["ra_professor"] = professores[r]["ra"]
 #Criação históricos
-
 historicos = []
+# Relações histórico e tcc 
+nAlunosTcc = 0
+alunTcc = []
 for i in range(len(alunos)):
     alunos[i]["id_curso"] = curso
     al_semestre = randint(1,4)
@@ -402,6 +416,10 @@ for i in range(len(alunos)):
                 r = randint(0,len(l_aux)-1)
                 historicos.append(gerarHistorico(alunos[i]["ra"],matrizes[j]["id_disciplina"],l_aux[r],randint(0,10)))
                 l_aux.clear()
+    if al_semestre == 4:
+        nAlunosTcc =+ 1  
+        alunTcc.append(alunos[i]["ra"])
+
 #reprovação
 for i in range(len(historicos)):
     historico = historicos[i]
@@ -422,25 +440,35 @@ for i in range(len(historicos)):
         nota_nova = randint(5,10)
         copia["nota"] = nota_nova
         historicos.append(copia)
-
-
+#TCC 
+nTccs = int(nAlunosTcc/2)
+tccs = gerarTCC(nTccs) 
+for i in range(len(tccs)):
+    r = randint(0,len(professores)-1)
+    coordenador = professores[r]["ra"]
+    aux = 0
+    while aux == 0:
+        if coordenador in l_aux:
+            r = randint(0,len(professores)-1)
+            coordenador = professores[r]["ra"]
+        else:
+            aux = 1
     
-#relação historicos 
+    tccs[i]["ra_professor"] = coordenador
+l_aux.clear()
+tccs_aluno = []
+for i in range(len(tccs)):
+    id_t = tccs[i]["id"]
+    for j in range(randint(1,4)):
+        r = randint(0,len(alunTcc)-1)
+        aluno = alunTcc[r]
+        tccs_aluno.append(gerarTCC_aluno(id_t,aluno))
+        del alunTcc[r]
+if len(alunTcc) != 0:
+    for i in range(len(alunTcc)):
+        r = randint(0,len(tccs)-1)
+        tccs_aluno.append(gerarTCC_aluno(tccs[r]["id"],alunTcc[i]))
 
-"""print("Departamentos:\n")
-print(depart)
-print("\nProfessores:\n")
-print(professores)
-print("\nCursos:\n")
-print(cursos)
-print("\n")
-print("Alunos:")
-print("\n")
-print(alunos)
-print("\nDisciplinas:\n")
-print(disciplinas)
-print("\nTurma\n")
-print(turmas)"""
 
 """for j in range(len(cursos)):
     print("Curso: ",cursos[j]["id"])
@@ -450,4 +478,6 @@ print(turmas)"""
 
 print(disciplinas)"""
 
-print(historicos)
+print(tccs)
+print("\n")
+print(tccs_aluno)
