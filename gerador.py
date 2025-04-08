@@ -299,7 +299,7 @@ if n > 8:
     depart = gerarDepartamento(8)
 else:
     depart = gerarDepartamento(n)
-professores = gerarProfessor(n^2 + 2*n)
+professores = gerarProfessor(n^2 + 10*n)
 #relação departamento - professor
 for i in range(len(depart)):
     aux = 1
@@ -337,7 +337,7 @@ for i in range(len(cursos)):
     l_aux.append(coord_cu)
 l_aux.clear()
 #criação do aluno
-alunos = gerarAlunos(n^2 + 4*n)
+alunos = gerarAlunos(len(professores)^2)
 #Relação aluno e curso
 for i in range(len(alunos)):
     if i < len(cursos):
@@ -346,7 +346,7 @@ for i in range(len(alunos)):
         r = randint(0,len(cursos)-1)
         alunos[i]["id_curso"] = cursos[r]["id"]
 #Criar as disciplinas
-disciplinas = gerarDisciplina(3*len(cursos))
+disciplinas = gerarDisciplina(4*len(cursos))
 #Relações das disciplinas - curso
 for i in range(len(disciplinas)):
     #relação com o departamento
@@ -417,7 +417,7 @@ for i in range(len(alunos)):
                 historicos.append(gerarHistorico(alunos[i]["ra"],matrizes[j]["id_disciplina"],l_aux[r],randint(0,10)))
                 l_aux.clear()
     if al_semestre == 4:
-        nAlunosTcc =+ 1  
+        nAlunosTcc += 1  
         alunTcc.append(alunos[i]["ra"])
 
 #reprovação
@@ -441,7 +441,7 @@ for i in range(len(historicos)):
         copia["nota"] = nota_nova
         historicos.append(copia)
 #TCC 
-nTccs = int(nAlunosTcc/2)
+nTccs = int(nAlunosTcc/3)
 tccs = gerarTCC(nTccs) 
 for i in range(len(tccs)):
     r = randint(0,len(professores)-1)
@@ -459,7 +459,7 @@ l_aux.clear()
 tccs_aluno = []
 for i in range(len(tccs)):
     id_t = tccs[i]["id"]
-    for j in range(randint(1,4)):
+    for j in range(randint(1,3)):
         r = randint(0,len(alunTcc)-1)
         aluno = alunTcc[r]
         tccs_aluno.append(gerarTCC_aluno(id_t,aluno))
