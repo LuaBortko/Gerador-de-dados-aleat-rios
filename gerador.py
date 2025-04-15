@@ -292,13 +292,10 @@ def gerarTCC_aluno(tcc,aluno):
     return tcc_alun
 
 #Main
-n = int(input("Digite o numero de dados 1-8: "))
+n = randint(3,8)
 #gera o numero de departamentos e professores
 l_aux = []
-if n > 8:
-    depart = gerarDepartamento(8)
-else:
-    depart = gerarDepartamento(n)
+depart = gerarDepartamento(n)
 professores = gerarProfessor(n^2 + 10*n)
 #relação departamento - professor
 for i in range(len(depart)):
@@ -478,6 +475,6 @@ if len(alunTcc) != 0:
 
 print(disciplinas)"""
 
-print(tccs)
-print("\n")
-print(tccs_aluno)
+#print(tccs)
+#print("\n")
+#print(tccs_aluno)
