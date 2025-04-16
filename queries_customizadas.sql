@@ -107,3 +107,10 @@
 --  WHERE a.ra = '24.112.641-4'
 
 --Liste todos os chefes de departamento e coordenadores de curso em apenas uma query de forma que a primeira coluna seja o nome do professor, a segunda o nome do departamento coordena e a terceira o nome do curso que coordena. Substitua os campos em branco do resultado da query pelo texto "nenhum"
+--SELECT p.nome AS nome, COALESCE(dep.nome, 'nenhum') AS Chefe_de_departamento, COALESCE(c.nome, 'nenhum') AS Chefe_de_curso
+--FROM professor p
+--FULL OUTER JOIN curso c
+--  ON c.ra_coordenador = p.ra
+--FULL OUTER JOIN departamento dep
+--  ON dep.ra_professor = p.ra
+--WHERE dep.nome != 'NULL' or c.nome != 'NULL'
