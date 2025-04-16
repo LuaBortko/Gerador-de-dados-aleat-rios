@@ -43,7 +43,7 @@ Instale as bibliotecas
 
 - Luana Bortko Rodrigues - 24.123.006-9  
 
-- Nuno Martins Guilhermino da Silva - 24.123.  
+- Nuno Martins Guilhermino da Silva - 24.123.035-8
 
 - Rafael Iamashita Becsei ㅤㅤㅤㅤㅤㅤ- 24.123.018-4
 
