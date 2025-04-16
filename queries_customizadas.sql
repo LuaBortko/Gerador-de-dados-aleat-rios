@@ -90,3 +90,20 @@
 --INNER JOIN aluno a ON t.ra_aluno = a.ra
 --INNER JOIN tcc tt ON tt.ra_professor = '12.816.681-7'
 --ORDER BY t.id_tcc;
+
+--Mostre a matriz curicular de pelo menos 2 cursos diferentes que possuem disciplinas em comum (e.g., Ciência da Computação e Ciência de Dados). Este exercício deve ser dividido em 2 queries sendo uma para cada curso;
+
+--Para um determinado aluno, mostre os códigos e nomes das diciplinas já cursadas junto com os nomes dos professores que lecionaram a disciplina para o aluno;
+--SELECT a.ra AS Aluno, d.id AS Codigo, d.nome AS Disciplina, p.nome AS professor, t.id AS turma
+--FROM aluno a
+--INNER JOIN historico h
+--  ON h.ra_aluno = a.ra
+--INNER JOIN disciplina d
+--  ON d.id = h.id_disciplina
+--INNER JOIN turma t
+--  ON t.id = h.id_turma
+--INNER JOIN professor p
+--  ON p.ra = t.ra_professor
+--  WHERE a.ra = '24.112.641-4'
+
+--Liste todos os chefes de departamento e coordenadores de curso em apenas uma query de forma que a primeira coluna seja o nome do professor, a segunda o nome do departamento coordena e a terceira o nome do curso que coordena. Substitua os campos em branco do resultado da query pelo texto "nenhum"
