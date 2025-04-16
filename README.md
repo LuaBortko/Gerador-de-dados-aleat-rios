@@ -5,11 +5,12 @@
 Este projeto tem como objetivo a implementação de um sistema de banco de dados voltado para a gestão acadêmica de uma universidade. O sistema foi projetado para facilitar a consulta, comparação e o gerenciamento de informações relacionadas à instituição de ensino. Além da estruturação e implementação do banco, os dados utilizados são gerados de forma aleatória através de um script em Python, simulando um cenário mais realista de uso e facilitando os testes e validações do sistema.
 
 ## Modelo Relacional
-![image](https://github.com/user-attachments/assets/a32763cc-8b4b-4c9a-85e1-988a0ce403a7)
 
+![image](https://github.com/user-attachments/assets/7afa1106-6a0b-4bc5-9bc6-ede1a283ed89)
 
 ## Modelo Entidade Relacional
 
+![image](https://github.com/user-attachments/assets/a479afed-bbcb-4d07-9edc-00732fe35a08)
 
 ## Execução do Projeto
 
@@ -39,6 +40,9 @@ Instale as bibliotecas
   pip install faker
 ```
 
+```bash
+pip install python-dotenv psycopg2
+```
 
 ## Autores
 
