@@ -640,39 +640,7 @@ try:
         if al_semestre == 4:
             nAlunosTcc += 1  
             alunTcc.append(alunos[i]["ra"])
-    print(turmas)
-    
-    #reprovação
-    for i in range(len(historicos)):
-        historico = historicos[i]
-        for j in range(len(turmas)):
-            if historico["id_turma"] == turmas[j]["id"]:
-                turma_atual = turmas[j] 
-        #aux = turma_atual["id"]
-        #id_aux = aux[3] + aux[4] + aux[5]
-       
-        if historicos[i]["nota"] < 5:
-            nota_nova = randint(5,10)
 
-            turma_atual["id"] = fake.numerify(text='DP-%%%')
-            aux1 = 1
-            while aux1 == 1:
-                if turma_atual["id"] in l_aux:
-                    turma_atual["id"] = fake.numerify(text='DP-%%%')
-                else:
-                    aux1 = 0
-            l_aux.append(turma_atual["id"])
-            turmas.append(turma_atual)
-
-            if turma_atual["semestre"] == "1º":
-                turma_atual["semestre"] = "2º"
-            else:
-                turma_atual["semestre"] = "1º"
-                turma_atual["ano"] = str(int(turma_atual["ano"]) + 1)
-            
-
-            cp = {"ra_aluno": historico["ra_aluno"], "id_disciplina": historico["id_disciplina"], "id_turma": turma_atual["id"], "nota": nota_nova}
-            historicos.append(cp) 
     aux2 = []
     l_aux.clear()
 
@@ -681,7 +649,6 @@ try:
         nota = str(historicos[i]["nota"])
         hist = {"ra_aluno": historicos[i]["ra_aluno"], "id_disciplina": historicos[i]["id_disciplina"], "id_turma": historicos[i]["id_turma"], "nota": nota}
         aux2.append(hist)
-    print(turmas)
     for d in turmas:
         inserção(d,"turma")
         
@@ -737,6 +704,3 @@ try:
 
 except Exception as e:
     print(f"Failed to connect: {e}")
-
-
-
