@@ -84,3 +84,9 @@
 --INNER JOIN turma t ON t.id_disciplina = h.id_disciplina
 --WHERE h.ra_aluno = '24.112.641-4'
 --ORDER BY id_disciplina;
+
+--Mostre todos os TCCs orientados por um professor junto com os nomes dos alunos que fizeram o projeto
+--SELECT distinct a.nome,t.id_tcc from tcc_aluno as t
+--INNER JOIN aluno a ON t.ra_aluno = a.ra
+--INNER JOIN tcc tt ON tt.ra_professor = '12.816.681-7'
+--ORDER BY t.id_tcc;
