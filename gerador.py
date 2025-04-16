@@ -536,7 +536,6 @@ try:
             alunos[i]["id_curso"] = cursos[r]["id"]
 
 
-
     #Criar as disciplinas
     disciplinas = gerarDisciplina(4*len(cursos))
 
@@ -612,7 +611,7 @@ try:
     nAlunosTcc = 0
     alunTcc = []
     for i in range(len(alunos)):
-        alunos[i]["id_curso"] = curso
+        curso = alunos[i]["id_curso"]
         al_semestre = randint(1,4)
         for j in range(len(matrizes)):
             if matrizes[j]["id_curso"] == curso:
