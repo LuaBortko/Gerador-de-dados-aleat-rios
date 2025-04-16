@@ -36,12 +36,16 @@ Vá até o diretório
 
 Instale as bibliotecas
 
+Faker
+
 ```bash
   pip install faker
 ```
 
+Conexão com o banco de dados
+
 ```bash
-pip install python-dotenv psycopg2
+   pip install python-dotenv psycopg2
 ```
 
 ## Autores
