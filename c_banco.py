@@ -108,6 +108,7 @@ def gerarDepartamento(n):
             else:
                 aux = 0
         cod = fake.numerify(text='DE-%%%')
+
         while aux1 == 1:
             if cod in ids:
                 cod = fake.numerify(text='DE-%%%')
@@ -232,7 +233,7 @@ def gerarDisciplina(n):
     return discips
 
 def gerarTurma(n):
-    turmas = []
+    turs = []
     ids = []
     for i in range(n):
         aux = 1
@@ -253,8 +254,8 @@ def gerarTurma(n):
         semestre = fake.semestre_provider()
         ids.append(id)
         turm = {"id": id, "id_disciplina": None, "semestre": str(semestre), "ano": str(ano), "periodo": periodo, "ra_professor": None}
-        turmas.append(turm)
-    return turmas
+        turs.append(turm)
+    return turs
 
 def gerarMatrizCurricular(curso,disciplina, semestre):
     matri_cur = {"id_curso": curso, "id_disciplina": disciplina, "semestre": semestre}
@@ -477,7 +478,6 @@ try:
         cursor.execute("commit")
     #Main
     
-    
     n = randint(3,8)
     #gera o numero de departamentos e professores
     l_aux = []
@@ -489,13 +489,16 @@ try:
 
     for x in aux:
         inserção(x,"departamento")
-    professores = gerarProfessor(10*n)
+
+    professores = gerarProfessor(2*n + 10)
     #relação professor - departamento
     for i in range(len(professores)):
         r = randint(0,len(depart)-1)
         professores[i]["id_departamento"] = depart[r]["id"]
+
     for l in professores:
         inserção(l, "professor")
+
 
     #relação departamento - professor
     for i in range(len(depart)):
@@ -506,9 +509,11 @@ try:
         r = randint(0, len(lpro)-1)
         coord_dep = lpro[r]
         depart[i]["ra_coordenador"] = coord_dep
+
     for i in depart:
         update(i)
-    
+
+
     #Criação de cursos
     cursos = gerarCurso(randint(4,10))
     #Relaçao curso e professor
@@ -525,9 +530,8 @@ try:
         cursos[i]["ra_coordenador"] = coord_cu
         l_aux.append(coord_cu)
     l_aux.clear()
-  
-    for x in cursos:
-        inserção(x,"curso")
+
+
 
     #criação do aluno
     alunos = gerarAlunos(len(professores)*3)
@@ -539,8 +543,7 @@ try:
             r = randint(0,len(cursos)-1)
             alunos[i]["id_curso"] = cursos[r]["id"]
 
-    for a in alunos:
-        inserção(a,"aluno")
+
 
     #Criar as disciplinas
     disciplinas = gerarDisciplina(4*len(cursos))
@@ -560,7 +563,7 @@ try:
         r2 =  randint(0,len(l_aux)-1)
         disciplinas[i]["ra_coordenador"] = l_aux[r2]
         l_aux.clear()
-    
+
 
 
     #Criação matriz
@@ -582,20 +585,18 @@ try:
             matrizes.append(gerarMatrizCurricular(curso,disciplina,randint(1,4)))
             disciplinas[r]["id_curso"] = curso
         l_aux.clear()
-    
-    for b in disciplinas:
-        inserção(b,"disciplina")
-    aux3 = []
+
+
+    matrizes2 = []
     for i in range(len(matrizes)):
         matri_cur = {"id_curso": matrizes[i]["id_curso"], "id_disciplina": matrizes[i]["id_disciplina"], "semestre": str(matrizes[i]["semestre"])}
 
-        aux3.append(matri_cur)
-    
-    for c in aux3:
-        inserção(c,"matriz_curricular")
-    
+        matrizes2.append(matri_cur)
+
+
+
     #Criação da turma
-    turmas = gerarTurma(len(disciplinas)*3)
+    turmas = gerarTurma(len(disciplinas)*2)
     #relações de turma
     for i in range(len(turmas)):
         #relação turma e disciplina
@@ -611,8 +612,8 @@ try:
             r = randint(0,len(professores)-1)
             turmas[i]["ra_professor"] = professores[r]["ra"]
         
-    
-    
+
+
     #Criação históricos
     historicos = []
     # Relações histórico e tcc 
@@ -640,23 +641,60 @@ try:
         if al_semestre == 4:
             nAlunosTcc += 1  
             alunTcc.append(alunos[i]["ra"])
+    #print(turmas)
+    print("\n")
+    #Reprovação
+    rep = []
+    teste = []
+    for i in range(len(historicos)):
+        if historicos[i]["nota"] < 5:
+            turma_atual = {}
+            for j in range(len(turmas)):
+                if historicos[i]["id_turma"] == turmas[j]["id"]:
+                    turma_atual = turmas[j].copy()
+            aux = turma_atual["id"]
+            id_aux = aux[3] + aux[4] + aux[5]  
+            id_tu = "DP-" + id_aux
+            
+            if turma_atual["semestre"] == "1º":
+                turma_atual["semestre"] = "2º"
+            else:
+                turma_atual["semestre"] = "1º"
+                turma_atual["ano"] = str(int(turma_atual["ano"]) + 1)
+            nota_nova = randint(5,10)
+            turma_atual["id"] = id_tu
+            cp = {"ra_aluno": historicos[i]["ra_aluno"], "id_disciplina": historicos[i]["id_disciplina"], "id_turma": turma_atual["id"], "nota": nota_nova}
+            teste.append(turma_atual)
+            historicos.append(cp)
 
-    aux2 = []
-    l_aux.clear()
+    #for i in range(len(teste)):
+    #   print(teste[i]["id"])
 
-    
+    #limpar a teste -> que tem dicionarios de turmas de DP, mas com repetição
+    vistos =[]
+    teste_final = []
+    for turma in teste:
+        if turma["id"] not in vistos:
+            vistos.append(turma["id"])
+            teste_final.append(turma)
+
+    #print("Apos limpa")
+    #for i in range(len(teste_final)):
+    #    print(teste_final[i]["id"])
+
+    #Adição das turmas de dp a lista de turmas principal
+    for i in range(len(teste_final)):
+        turmas.append(teste_final[i])
+
+    #for i in range(len(turmas)):
+    #    print(turmas[i]["id"])
+
+    historicos2 = []
     for i in range(len(historicos)):
         nota = str(historicos[i]["nota"])
         hist = {"ra_aluno": historicos[i]["ra_aluno"], "id_disciplina": historicos[i]["id_disciplina"], "id_turma": historicos[i]["id_turma"], "nota": nota}
-        aux2.append(hist)
-    for d in turmas:
-        inserção(d,"turma")
-        
-    for e in aux2:
-        inserção(e,"historico")
-    
-
-
+        historicos2.append(hist)
+    #print(turmas)
 
     #TCC 
     nTccs = int(nAlunosTcc/3)
@@ -675,9 +713,6 @@ try:
         tccs[i]["ra_professor"] = coordenador
     l_aux.clear()
 
-    for f in tccs:
-        inserção(f,"tcc")
-
     #criação do TCC_aluno
     tccs_aluno = []
     for i in range(len(tccs)):
@@ -691,11 +726,26 @@ try:
         for i in range(len(alunTcc)):
             r = randint(0,len(tccs)-1)
             tccs_aluno.append(gerarTCC_aluno(tccs[r]["id"],alunTcc[i]))
-    
-    for g in tccs_aluno:
-        inserção(g,"tcc_aluno")
-    
 
+
+    
+    #Conexões -> curso aluno disciplina turma matriz historicos tcc tcc-aluno
+    for i in cursos:
+        inserção(i,"curso")
+    for i in alunos:
+        inserção(i,"aluno")
+    for i in disciplinas:
+        inserção(i,"disciplina")
+    for i in turmas:
+        inserção(i,"turma")
+    for i in matrizes2:
+        inserção(i,"matriz_curricular")
+    for i in historicos2:
+        inserção(i, "historico")
+    for i in tccs:
+        inserção(i,"tcc")
+    for i in tccs_aluno:
+        inserção(i,"tcc_aluno")
     #inserção(dictionary,"instructor")
     # Close the cursor and connection
     cursor.close() #sem cursor
