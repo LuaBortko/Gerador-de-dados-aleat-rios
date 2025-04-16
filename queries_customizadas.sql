@@ -77,3 +77,10 @@
 --10.Mostre os TCCs e o professor coordenador de cada tcc
 --SELECT nome, ra_professor AS Professor_Coordenador
 --FROM tcc
+
+
+--Mostre todo o histórico escolar de um aluno que teve reprovação em uma disciplina, retornando inclusive a reprovação em um semestre e a aprovação no semestre seguinte;
+--SELECT distinct t.ano,t.semestre,h.id_turma,h.id_disciplina,h.nota from historico as h
+--INNER JOIN turma t ON t.id_disciplina = h.id_disciplina
+--WHERE h.ra_aluno = '24.112.641-4'
+--ORDER BY id_disciplina;
